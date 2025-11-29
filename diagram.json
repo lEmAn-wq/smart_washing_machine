@@ -3,60 +3,108 @@
   "author": "Mẫn Lê",
   "editor": "wokwi",
   "parts": [
-    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 124.8, "left": -110.36, "attrs": {} },
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 120, "left": 0, "attrs": {} },
     {
-      "type": "board-ili9341-cap-touch",
-      "id": "tft",
-      "top": 100,
-      "left": 150,
-      "attrs": {}
+      "type": "wokwi-lcd2004",
+      "id": "lcd1",
+      "top": -166.4,
+      "left": -119.2,
+      "attrs": { "pins": "i2c" }
     },
-    { "type": "wokwi-relay-module", "id": "relay_motor", "top": -80, "left": 60, "attrs": {} },
-    { "type": "wokwi-relay-module", "id": "relay_valve", "top": 40, "left": 60, "attrs": {} },
-    
-    { "type": "wokwi-potentiometer", "id": "pot_water", "top": -68.5, "left": -288.2, "attrs": {} },
-    { "type": "wokwi-potentiometer", "id": "pot_dirty", "top": 40, "left": -288.2, "attrs": {} },
-    { "type": "wokwi-slide-switch", "id": "sw_door", "top": 150, "left": -280, "attrs": {} },
-    
-    { "type": "wokwi-text", "id": "txt1", "top": -95, "left": -280, "attrs": { "text": "Water Level (Pot)" } },
-    { "type": "wokwi-text", "id": "txt2", "top": 15, "left": -280, "attrs": { "text": "Dirtiness (Pot)" } },
-    { "type": "wokwi-text", "id": "txt3", "top": 125, "left": -280, "attrs": { "text": "Door Switch" } },
-    { "type": "wokwi-text", "id": "txt4", "top": -100, "left": 60, "attrs": { "text": "Motor Relay" } },
-    { "type": "wokwi-text", "id": "txt5", "top": 20, "left": 60, "attrs": { "text": "Valve Relay" } }
+    { "type": "wokwi-relay-module", "id": "relay_motor", "top": 20, "left": 280, "attrs": {} },
+    { "type": "wokwi-relay-module", "id": "relay_valve", "top": 140, "left": 280, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "pot_water", "top": -1.3, "left": -384.2, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "pot_dirty", "top": 17.9, "left": -240.2, "attrs": {} },
+    { "type": "wokwi-slide-switch", "id": "sw_door", "top": 340.4, "left": -380.9, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_start",
+      "top": 399.8,
+      "left": 9.6,
+      "attrs": { "color": "green", "label": "START" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_pause",
+      "top": 323,
+      "left": -105.6,
+      "attrs": { "color": "yellow", "label": "PAUSE" }
+    },
+    { "type": "wokwi-buzzer", "id": "bz1", "top": 260, "left": 280, "attrs": { "volume": "0.1" } },
+    { "type": "wokwi-tt-motor", "id": "motor1", "top": 20, "left": 400, "attrs": {} },
+    {
+      "type": "wokwi-text",
+      "id": "txt1",
+      "top": -38.4,
+      "left": -393.6,
+      "attrs": { "text": "Water Level" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "txt2",
+      "top": -19.2,
+      "left": -240,
+      "attrs": { "text": "Dirtiness" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "txt3",
+      "top": 316.8,
+      "left": -355.2,
+      "attrs": { "text": "Door Switch" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "txt4",
+      "top": 0,
+      "left": 280,
+      "attrs": { "text": "Motor Relay" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "txt5",
+      "top": 120,
+      "left": 280,
+      "attrs": { "text": "Valve Relay" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "txt6",
+      "top": 240,
+      "left": 280,
+      "attrs": { "text": "Alarm Buzzer" }
+    }
   ],
   "connections": [
     [ "esp:TX", "$serialMonitor:RX", "", [] ],
     [ "esp:RX", "$serialMonitor:TX", "", [] ],
-    
+    [ "lcd1:GND", "esp:GND.1", "black", [ "h0" ] ],
+    [ "lcd1:VCC", "esp:5V", "red", [ "h0" ] ],
+    [ "lcd1:SDA", "esp:21", "green", [ "h0" ] ],
+    [ "lcd1:SCL", "esp:22", "green", [ "h0" ] ],
     [ "relay_motor:VCC", "esp:5V", "red", [ "h0" ] ],
     [ "relay_motor:GND", "esp:GND.1", "black", [ "h0" ] ],
     [ "relay_motor:IN", "esp:26", "green", [ "h0" ] ],
-    
     [ "relay_valve:VCC", "esp:5V", "red", [ "v0" ] ],
     [ "relay_valve:GND", "esp:GND.1", "black", [ "v0" ] ],
     [ "relay_valve:IN", "esp:32", "purple", [ "h0" ] ],
-
     [ "pot_water:GND", "esp:GND.1", "black", [ "v0" ] ],
     [ "pot_water:VCC", "esp:3V3", "red", [ "v0" ] ],
     [ "pot_water:SIG", "esp:34", "blue", [ "v0" ] ],
-    
     [ "pot_dirty:GND", "esp:GND.1", "black", [ "v0" ] ],
     [ "pot_dirty:VCC", "esp:3V3", "red", [ "v0" ] ],
     [ "pot_dirty:SIG", "esp:35", "orange", [ "v0" ] ],
-    
     [ "sw_door:1", "esp:GND.2", "black", [ "v0" ] ],
     [ "sw_door:2", "esp:13", "green", [ "v0" ] ],
-
-    [ "tft:GND", "esp:GND.1", "black", [ "v0" ] ],
-    [ "tft:VCC", "esp:3V3", "red", [ "v0" ] ],
-    [ "tft:CS", "esp:15", "yellow", [ "v0" ] ],
-    [ "tft:DC", "esp:2", "blue", [ "v0" ] ],
-    [ "tft:RST", "esp:4", "white", [ "v0" ] ],
-    [ "tft:SCK", "esp:18", "green", [ "v0" ] ],
-    [ "tft:MOSI", "esp:23", "green", [ "v0" ] ],
-    [ "tft:MISO", "esp:19", "green", [ "v0" ] ],
-    [ "tft:SDA", "esp:21", "cyan", [ "v0" ] ],
-    [ "tft:SCL", "esp:22", "cyan", [ "v0" ] ]
+    [ "btn_start:2.r", "esp:GND.2", "black", [ "h0" ] ],
+    [ "btn_start:1.r", "esp:12", "green", [ "h0" ] ],
+    [ "btn_pause:2.r", "esp:GND.2", "black", [ "h0" ] ],
+    [ "btn_pause:1.r", "esp:14", "yellow", [ "h0" ] ],
+    [ "bz1:1", "esp:GND.1", "black", [ "v0" ] ],
+    [ "bz1:2", "esp:15", "purple", [ "v0" ] ],
+    [ "motor1:V+", "relay_motor:NO", "red", [ "v0" ] ],
+    [ "motor1:V-", "esp:GND.1", "black", [ "v0" ] ],
+    [ "relay_motor:COM", "esp:5V", "red", [ "v0" ] ]
   ],
   "dependencies": {}
 }
