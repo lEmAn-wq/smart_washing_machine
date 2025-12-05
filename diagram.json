@@ -31,7 +31,6 @@
       "attrs": { "color": "yellow", "label": "PAUSE" }
     },
     { "type": "wokwi-buzzer", "id": "bz1", "top": 260, "left": 280, "attrs": { "volume": "0.1" } },
-    { "type": "wokwi-tt-motor", "id": "motor1", "top": 20, "left": 400, "attrs": {} },
     {
       "type": "wokwi-text",
       "id": "txt1",
@@ -101,10 +100,7 @@
     [ "btn_pause:2.r", "esp:GND.2", "black", [ "h0" ] ],
     [ "btn_pause:1.r", "esp:14", "yellow", [ "h0" ] ],
     [ "bz1:1", "esp:GND.1", "black", [ "v0" ] ],
-    [ "bz1:2", "esp:15", "purple", [ "v0" ] ],
-    [ "motor1:V+", "relay_motor:NO", "red", [ "v0" ] ],
-    [ "motor1:V-", "esp:GND.1", "black", [ "v0" ] ],
-    [ "relay_motor:COM", "esp:5V", "red", [ "v0" ] ]
+    [ "bz1:2", "esp:15", "purple", [ "v0" ] ]
   ],
   "dependencies": {}
 }
